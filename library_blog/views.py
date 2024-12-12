@@ -35,3 +35,5 @@ class BookDetailView(generic.DetailView):
 
     def get_queryset(self):
         return models.Book.objects.all()
+
+
