@@ -1,5 +1,7 @@
 from xml.dom.minidom import Comment
 from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
@@ -10,3 +12,5 @@ class BookAdmin(admin.ModelAdmin):
 
     admin.site.register(Genre)
     admin.site.register(Comment)
+    @admin.register(Tag)
+    class ModelNameAdmin(admin.ModelAdmin):

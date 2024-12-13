@@ -1,39 +1,46 @@
-
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 import datetime
 from django.views import generic
 from templates.models import models
+from .forms import CommentForm
 
 
 def about_me(request):
     return render(request, 'main_page/about_me.html')
 
 
-
-def about_my_pet(request):
-    return HttpResponse(f"Its my cat - Murrr")
-
-
-
 def current_tima(request):
     return HttpResponse(datetime.datetime.now())
 
 
-class BooklistView(generic.ListView):
-    template_name = 'main_page/book.html'
+class Younger_isteView(generic.ListView):
+    template_name = 'tags__name= for Olds'
+
+
+
     context_object_name = 'books'
     model = models.Book
 
+
+def context_data(self, **kwargs):
+    context = super().get_context_data(kwargs)
+    context['form'] = CommentForm()
+    return context
+
+
+def post(self, request):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.book = self.abject
+        comment.save()
+        return redirect('book-detail', pk=self.object.pk)
+    return self.get(request, *argo, **kwargs)
+
+class AllListView(generic.ListView):
+    template_name = 'tag/all html'
+    context_object_name = 'alls'
+    model = Cloth
+
     def get_queryset(self):
-        return models.Book.objects.all()
-
-
-class BookDetailView(generic.DetailView):
-    template_name = 'main_page/book_detail.html'
-    context_object_name = 'book'
-    model = models.Book
-
-    def get_queryset(self):
-        return models.Book.objects.all()
-
-
+        return  Cloth.objects.all()
