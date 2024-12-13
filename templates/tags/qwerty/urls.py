@@ -8,3 +8,4 @@ urlpatterns = [
     path('main_page/', include('main_page.urls')),
     path('tags/', include('tags.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

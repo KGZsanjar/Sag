@@ -44,3 +44,6 @@ class AllListView(generic.ListView):
 
     def get_queryset(self):
         return  Cloth.objects.all()
+
+
+

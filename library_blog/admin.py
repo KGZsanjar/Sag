@@ -13,4 +13,3 @@ class BookAdmin(admin.ModelAdmin):
     admin.site.register(Genre)
     admin.site.register(Comment)
     @admin.register(Tag)
-    class ModelNameAdmin(admin.ModelAdmin):
