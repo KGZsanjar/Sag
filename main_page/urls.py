@@ -1,25 +1,13 @@
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('library_blog/', include('library_blog.urls')),
-
+    path('', views.recipe_list, name='recipe_list'),
+    path('recipe/<int:pk>/', views.recipe_detail, name='recipe_detail'),
+    path('add_recipe/', views.add_recipe, name='add_recipe'),
+    path('add_ingredient/', views.add_ingredient, name='add_ingredient'),
+    path('delete_recipe/<int:pk>/', views.delete_recipe, name='delete_recipe'),
 ]
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
-
-
 
 
 

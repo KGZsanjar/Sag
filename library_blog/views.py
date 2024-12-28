@@ -1,49 +1,37 @@
-from django.shortcuts import render, HttpResponse, redirect
-import datetime
-from django.views import generic
-from templates.models import models
-from .forms import CommentForm
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Recipe, Ingredient
+from .forms import RecipeForm, IngredientForm
 
+def recipe_list(request):
+    recipes = Recipe.objects.all()
+    return render(request, 'recipes/recipe_list.html', {'recipes': recipes})
 
-def about_me(request):
-    return render(request, 'main_page/about_me.html')
+def recipe_detail(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    ingredients = recipe.ingredients.all()
+    return render(request, 'recipes/recipe_detail.html', {'recipe': recipe, 'ingredients': ingredients})
 
+def add_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('recipe_list')
+    else:
+        form = RecipeForm()
+    return render(request, 'recipes/add_recipe.html', {'form': form})
 
-def current_tima(request):
-    return HttpResponse(datetime.datetime.now())
+def add_ingredient(request):
+    if request.method == 'POST':
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('recipe_list')
+    else:
+        form = IngredientForm()
+    return render(request, 'recipes/add_ingredient.html', {'form': form})
 
-
-class Younger_isteView(generic.ListView):
-    template_name = 'tags__name= for Olds'
-
-
-
-    context_object_name = 'books'
-    model = models.Book
-
-
-def context_data(self, **kwargs):
-    context = super().get_context_data(kwargs)
-    context['form'] = CommentForm()
-    return context
-
-
-def post(self, request):
-    form = CommentForm(request.POST)
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.book = self.abject
-        comment.save()
-        return redirect('book-detail', pk=self.object.pk)
-    return self.get(request, *argo, **kwargs)
-
-class AllListView(generic.ListView):
-    template_name = 'tag/all html'
-    context_object_name = 'alls'
-    model = Cloth
-
-    def get_queryset(self):
-        return  Cloth.objects.all()
-
-
-
+def delete_recipe(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    recipe.delete()
+    return redirect('recipe_list')
